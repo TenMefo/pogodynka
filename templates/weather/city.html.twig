@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Pogoda — {{ location.city }}
+{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>Pogoda dla {{ location.city }}, {{ location.country }}</h1>
+
+        <p>
+            Współrzędne:
+            {{ location.latitude }},
+            {{ location.longitude }}
+        </p>
+
+        <h2>Prognoza na kolejne dni</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Data</th>
+                <th>Temperatura</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for measurement in measurements %}
+                <tr>
+                    <td>{{ measurement.date|date('d.m.Y') }}</td>
+                    <td>{{ measurement.celsius }} °C</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2">
+                        Brak prognozy na kolejne dni.
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}
