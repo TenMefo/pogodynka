@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lokalizacje{% endblock %}
+
+{% block body %}
+    <section class="panel">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <h1 class="h3 mb-0">Lokalizacje</h1>
+
+            <a class="btn btn-primary" href="{{ path('app_location_new') }}">
+                Dodaj lokalizację
+            </a>
+        </div>
+
+        <div class="row g-3">
+            {% for location in locations %}
+                <div class="col-12 col-md-6">
+                    <article class="card h-100">
+                        <div class="card-body">
+                            <h2 class="h5">
+                                {{ location.city }}, {{ location.country }}
+                            </h2>
+
+                            <p class="mb-3">
+                                ID: {{ location.id }}<br>
+                                Szerokość: {{ location.latitude }}<br>
+                                Długość: {{ location.longitude }}
+                            </p>
+
+                            <a
+                                class="btn btn-outline-secondary btn-sm"
+                                href="{{ path('app_location_show', {'id': location.id}) }}"
+                            >
+                                Szczegóły
+                            </a>
+
+                            <a
+                                class="btn btn-outline-primary btn-sm"
+                                href="{{ path('app_location_edit', {'id': location.id}) }}"
+                            >
+                                Edytuj
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            {% else %}
+                <p>Brak lokalizacji.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ heading }}{% endblock %}
+
+{% block body %}
+    <section class="panel mx-auto" style="max-width: 720px">
+        <h1 class="h3 mb-4">{{ heading }}</h1>
+
+        {# Wyłącza walidację przeglądarki, ale PHP nadal sprawdza dane. #}
+        {{ form_start(form, {
+            'attr': {
+                'novalidate': 'novalidate'
+            }
+        }) }}
+
+        {{ form_errors(form) }}
+
+        {{ form_widget(form) }}
+
+        <button class="btn btn-primary">
+            Zapisz
+        </button>
+
+        {{ form_end(form) }}
+
+        <a class="btn btn-link px-0 mt-3" href="{{ path(back_route) }}">
+            Wróć do listy
+        </a>
+    </section>
+{% endblock %}

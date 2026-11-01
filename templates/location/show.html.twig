@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ location.city }}{% endblock %}
+
+{% block body %}
+    <section class="panel">
+        <h1 class="h3">
+            {{ location.city }}, {{ location.country }}
+        </h1>
+
+        <p class="mt-4">
+            <strong>ID:</strong> {{ location.id }}<br>
+            <strong>Szerokość:</strong> {{ location.latitude }}<br>
+            <strong>Długość:</strong> {{ location.longitude }}
+        </p>
+
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <a class="btn btn-outline-secondary" href="{{ path('app_location_index') }}">
+                Wróć do listy
+            </a>
+
+            <a
+                class="btn btn-primary"
+                href="{{ path('app_location_edit', {'id': location.id}) }}"
+            >
+                Edytuj
+            </a>
+
+            <form
+                method="post"
+                action="{{ path('app_location_delete', {'id': location.id}) }}"
+                onsubmit="return confirm('Czy na pewno usunąć tę lokalizację?');"
+            >
+                <input
+                    type="hidden"
+                    name="_token"
+                    value="{{ csrf_token('delete_location' ~ location.id) }}"
+                >
+
+                <button class="btn btn-danger">
+                    Usuń lokalizację
+                </button>
+            </form>
+        </div>
+
+        <p class="text-body-secondary mt-3 mb-0">
+            Lokalizację można usunąć, gdy nie ma przypisanych pomiarów.
+        </p>
+    </section>
+{% endblock %}

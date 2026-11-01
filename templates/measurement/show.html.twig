@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pomiar {{ measurement.id }}{% endblock %}
+
+{% block body %}
+    <section class="panel">
+        <h1 class="h3">Pomiar {{ measurement.id }}</h1>
+
+        <p class="mt-4">
+            <strong>Miejscowość:</strong>
+            {{ measurement.location.city }},
+            {{ measurement.location.country }}<br>
+
+            <strong>Data:</strong>
+            {{ measurement.date|date('d.m.Y') }}<br>
+
+            <strong>Temperatura:</strong>
+            {{ measurement.celsius }} °C
+        </p>
+
+        <div class="d-flex flex-wrap gap-2 mt-4">
+            <a class="btn btn-outline-secondary" href="{{ path('app_measurement_index') }}">
+                Wróć do listy
+            </a>
+
+            <a
+                class="btn btn-primary"
+                href="{{ path('app_measurement_edit', {'id': measurement.id}) }}"
+            >
+                Edytuj
+            </a>
+
+            <form
+                method="post"
+                action="{{ path('app_measurement_delete', {'id': measurement.id}) }}"
+                onsubmit="return confirm('Czy na pewno usunąć ten pomiar?');"
+            >
+                <input
+                    type="hidden"
+                    name="_token"
+                    value="{{ csrf_token('delete_measurement' ~ measurement.id) }}"
+                >
+
+                <button class="btn btn-danger">
+                    Usuń pomiar
+                </button>
+            </form>
+        </div>
+    </section>
+{% endblock %}

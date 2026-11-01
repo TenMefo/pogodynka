@@ -1,0 +1,38 @@
+App\Entity\Measurement:
+    properties:
+        location:
+            - NotNull:
+                  message: 'Wybierz miejscowość.'
+                  groups: [new, edit]
+
+        date:
+            - NotNull:
+                  message: 'Podaj datę pomiaru.'
+                  groups: [new, edit]
+
+            - GreaterThan:
+                  value: 'today'
+                  message: 'Tworzenie: data prognozy musi być późniejsza niż dzisiaj.'
+                  groups: [new]
+
+            - GreaterThanOrEqual:
+                  value: 'today'
+                  message: 'Edycja: data nie może być wcześniejsza niż dzisiaj.'
+                  groups: [edit]
+
+        celsius:
+            - NotBlank:
+                  message: 'Podaj temperaturę.'
+                  groups: [new, edit]
+
+            - Range:
+                  min: -50
+                  max: 50
+                  notInRangeMessage: 'Tworzenie: temperatura musi być od -50 do 50 °C.'
+                  groups: [new]
+
+            - Range:
+                  min: -50
+                  max: 50
+                  notInRangeMessage: 'Edycja: temperatura musi być od -50 do 50 °C.'
+                  groups: [edit]

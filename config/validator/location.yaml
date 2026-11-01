@@ -1,0 +1,52 @@
+App\Entity\Location:
+    properties:
+        city:
+            - NotBlank:
+                  message: 'Podaj nazwę miejscowości.'
+                  groups: [new, edit]
+
+            - Length:
+                  min: 2
+                  max: 255
+                  minMessage: 'Tworzenie: nazwa musi mieć co najmniej 2 znaki.'
+                  maxMessage: 'Nazwa może mieć maksymalnie 255 znaków.'
+                  groups: [new]
+
+            - Length:
+                  min: 2
+                  max: 255
+                  minMessage: 'Edycja: nazwa musi mieć co najmniej 2 znaki.'
+                  maxMessage: 'Nazwa może mieć maksymalnie 255 znaków.'
+                  groups: [edit]
+
+        country:
+            - NotBlank:
+                  message: 'Wybierz państwo.'
+                  groups: [new, edit]
+
+            - Choice:
+                  choices: [PL, DE, FR, ES, IT, GB, US]
+                  message: 'Wybierz państwo dostępne na liście.'
+                  groups: [new, edit]
+
+        latitude:
+            - NotBlank:
+                  message: 'Podaj szerokość geograficzną.'
+                  groups: [new, edit]
+
+            - Range:
+                  min: -90
+                  max: 90
+                  notInRangeMessage: 'Szerokość geograficzna musi być od -90 do 90.'
+                  groups: [new, edit]
+
+        longitude:
+            - NotBlank:
+                  message: 'Podaj długość geograficzną.'
+                  groups: [new, edit]
+
+            - Range:
+                  min: -180
+                  max: 180
+                  notInRangeMessage: 'Długość geograficzna musi być od -180 do 180.'
+                  groups: [new, edit]

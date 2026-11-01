@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pomiary{% endblock %}
+
+{% block body %}
+    <section class="panel">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <h1 class="h3 mb-0">Pomiary</h1>
+
+            <a class="btn btn-primary" href="{{ path('app_measurement_new') }}">
+                Dodaj pomiar
+            </a>
+        </div>
+
+        <div class="row g-3">
+            {% for measurement in measurements %}
+                <div class="col-12 col-md-6">
+                    <article class="card h-100">
+                        <div class="card-body">
+                            <h2 class="h5">
+                                {{ measurement.location.city }},
+                                {{ measurement.location.country }}
+                            </h2>
+
+                            <p class="mb-3">
+                                ID: {{ measurement.id }}<br>
+                                Data: {{ measurement.date|date('d.m.Y') }}<br>
+                                Temperatura:
+                                <strong>{{ measurement.celsius }} °C</strong>
+                            </p>
+
+                            <a
+                                class="btn btn-outline-secondary btn-sm"
+                                href="{{ path('app_measurement_show', {'id': measurement.id}) }}"
+                            >
+                                Szczegóły
+                            </a>
+
+                            <a
+                                class="btn btn-outline-primary btn-sm"
+                                href="{{ path('app_measurement_edit', {'id': measurement.id}) }}"
+                            >
+                                Edytuj
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            {% else %}
+                <p>Brak pomiarów.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
