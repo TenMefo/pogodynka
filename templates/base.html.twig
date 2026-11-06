@@ -54,6 +54,11 @@
             >
                 Pomiary
             </a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="btn btn-outline-light btn-sm" href="{{ path('app_logout') }}">Logout</a>
+            {% else %}
+                <a class="btn btn-outline-light btn-sm" href="{{ path('app_login') }}">Login</a>
+            {% endif %}
         </div>
     </div>
 </nav>
@@ -70,8 +75,11 @@
     {% block body %}{% endblock %}
 </div>
 
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
 {% block javascripts %}{% endblock %}
 </body>
 </html>
+

@@ -18,8 +18,14 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            http_basic:
-                realm: 'My Secured Area'
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                default_target_path: app_location_index # modyfikacja chata
+                always_use_default_target_path: true # modyfikacja chata
+            logout:
+                path: app_logout
+                target: app_login
 
             # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -32,6 +38,21 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/, roles: PUBLIC_ACCESS }
+
+    role_hierarchy:
+        ROLE_ADMIN:
+            - ROLE_USER
+            - ROLE_LOCATION_NEW
+            - ROLE_LOCATION_EDIT
+            - ROLE_LOCATION_DELETE
+            - ROLE_MEASUREMENT_NEW
+            - ROLE_MEASUREMENT_EDIT
+            - ROLE_MEASUREMENT_DELETE
+        ROLE_USER:
+            - ROLE_LOCATION_INDEX
+            - ROLE_LOCATION_SHOW
+            - ROLE_MEASUREMENT_INDEX
+            - ROLE_MEASUREMENT_SHOW
 
 when@test:
     security:
