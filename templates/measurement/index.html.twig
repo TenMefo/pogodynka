@@ -28,20 +28,22 @@
                                 Temperatura:
                                 <strong>{{ measurement.celsius }} °C</strong>
                             </p>
-
+                            {% if is_granted('ROLE_MEASUREMENT_SHOW')  %}
                             <a
                                 class="btn btn-outline-secondary btn-sm"
                                 href="{{ path('app_measurement_show', {'id': measurement.id}) }}"
                             >
                                 Szczegóły
                             </a>
-
+                            {% endif %}
+                            {% if is_granted('ROLE_MEASUREMENT_EDIT')  %}
                             <a
                                 class="btn btn-outline-primary btn-sm"
                                 href="{{ path('app_measurement_edit', {'id': measurement.id}) }}"
                             >
                                 Edytuj
                             </a>
+                            {% endif %}
                         </div>
                     </article>
                 </div>

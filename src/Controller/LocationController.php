@@ -12,11 +12,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/location')]
 class LocationController extends AbstractController
 {
     #[Route('', name: 'app_location_index', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(LocationRepository $repository): Response
     {
         return $this->render('location/index.html.twig', [
@@ -25,6 +27,7 @@ class LocationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_location_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_LOCATION_NEW')]
     public function new(
         Request $request,
         EntityManagerInterface $em
@@ -64,6 +67,7 @@ class LocationController extends AbstractController
         requirements: ['id' => '\d+'],
         methods: ['GET']
     )]
+    #[IsGranted('ROLE_LOCATION_SHOW')]
     public function show(
         #[MapEntity(id: 'id')]
         Location $location
@@ -79,6 +83,7 @@ class LocationController extends AbstractController
         requirements: ['id' => '\d+'],
         methods: ['GET', 'POST']
     )]
+    #[IsGranted('ROLE_LOCATION_EDIT')]
     public function edit(
         Request $request,
         #[MapEntity(id: 'id')]
@@ -117,6 +122,7 @@ class LocationController extends AbstractController
         requirements: ['id' => '\d+'],
         methods: ['POST']
     )]
+    #[IsGranted('ROLE_LOCATION_DELETE')]
     public function delete(
         Request $request,
         #[MapEntity(id: 'id')]
