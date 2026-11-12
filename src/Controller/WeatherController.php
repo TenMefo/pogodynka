@@ -22,7 +22,10 @@ class WeatherController extends AbstractController
         MeasurementRepository $measurements
     ): Response {
         // Znajdź miejscowość w bazie.
-        $location = $locations->findOneByCityAndCountry($city, $country);
+        $location = $locations->findOneBy([
+            'city' => $city,
+            'country' => $country,
+        ]);
 
         // Jeśli nie istnieje, wyświetl błąd 404.
         if ($location === null) {
