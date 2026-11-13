@@ -24,9 +24,11 @@
 
                             <p class="mb-3">
                                 ID: {{ measurement.id }}<br>
-                                Data: {{ measurement.date|date('d.m.Y') }}<br>
+                                Data i godzina: {{ measurement.date|date('d.m.Y H:i') }}<br>
                                 Temperatura:
-                                <strong>{{ measurement.celsius }} °C</strong>
+                                <strong>{{ measurement.celsius }} °C</strong><br>
+                                Wilgotność: {{ measurement.humidity is null ? 'Brak danych' : measurement.humidity ~ ' %' }}<br>
+                                Ciśnienie: {{ measurement.pressureHpa is null ? 'Brak danych' : measurement.pressureHpa ~ ' hPa' }}
                             </p>
                             {% if is_granted('ROLE_MEASUREMENT_SHOW')  %}
                             <a

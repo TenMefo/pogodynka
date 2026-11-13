@@ -11,11 +11,17 @@
             {{ measurement.location.city }},
             {{ measurement.location.country }}<br>
 
-            <strong>Data:</strong>
-            {{ measurement.date|date('d.m.Y') }}<br>
+            <strong>Data i godzina:</strong>
+            {{ measurement.date|date('d.m.Y H:i') }}<br>
 
             <strong>Temperatura:</strong>
-            {{ measurement.celsius }} °C
+            {{ measurement.celsius }} °C<br>
+
+            <strong>Wilgotność:</strong>
+            {{ measurement.humidity is null ? 'Brak danych' : measurement.humidity ~ ' %' }}<br>
+
+            <strong>Ciśnienie:</strong>
+            {{ measurement.pressureHpa is null ? 'Brak danych' : measurement.pressureHpa ~ ' hPa' }}
         </p>
 
         <div class="d-flex flex-wrap gap-2 mt-4">

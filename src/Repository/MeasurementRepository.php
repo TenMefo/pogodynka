@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Measurement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Location;
 
@@ -47,8 +48,8 @@ class MeasurementRepository extends ServiceEntityRepository
             ->where('m.location = :location')
             ->setParameter('location', $location)
 
-            ->andWhere('m.date > :today')
-            ->setParameter('today', date('Y-m-d'))
+            ->andWhere('m.date >= :tomorrow')
+            ->setParameter('tomorrow', new \DateTime('tomorrow'), Types::DATETIME_MUTABLE)
 
             ->orderBy('m.date', 'ASC')
             ->getQuery()

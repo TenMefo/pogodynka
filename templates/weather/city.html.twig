@@ -19,20 +19,24 @@
         <table>
             <thead>
             <tr>
-                <th>Data</th>
+                <th>Data i godzina</th>
                 <th>Temperatura</th>
+                <th>Wilgotność</th>
+                <th>Ciśnienie</th>
             </tr>
             </thead>
 
             <tbody>
             {% for measurement in measurements %}
                 <tr>
-                    <td>{{ measurement.date|date('d.m.Y') }}</td>
+                    <td>{{ measurement.date|date('d.m.Y H:i') }}</td>
                     <td>{{ measurement.celsius }} °C</td>
+                    <td>{{ measurement.humidity is null ? 'Brak danych' : measurement.humidity ~ ' %' }}</td>
+                    <td>{{ measurement.pressureHpa is null ? 'Brak danych' : measurement.pressureHpa ~ ' hPa' }}</td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="2">
+                    <td colspan="4">
                         Brak prognozy na kolejne dni.
                     </td>
                 </tr>

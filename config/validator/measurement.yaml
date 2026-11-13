@@ -7,11 +7,11 @@ App\Entity\Measurement:
 
         date:
             - NotNull:
-                  message: 'Podaj datę pomiaru.'
+                  message: 'Podaj datę i godzinę pomiaru.'
                   groups: [new, edit]
 
-            - GreaterThan:
-                  value: 'today'
+            - GreaterThanOrEqual:
+                  value: 'tomorrow'
                   message: 'Tworzenie: data prognozy musi być późniejsza niż dzisiaj.'
                   groups: [new]
 
@@ -36,3 +36,25 @@ App\Entity\Measurement:
                   max: 50
                   notInRangeMessage: 'Edycja: temperatura musi być od -50 do 50 °C.'
                   groups: [edit]
+
+        humidity:
+            - NotNull:
+                  message: 'Podaj wilgotność.'
+                  groups: [new, edit]
+
+            - Range:
+                  min: 0
+                  max: 100
+                  notInRangeMessage: 'Wilgotność musi wynosić od 0 do 100%.'
+                  groups: [new, edit]
+
+        pressureHpa:
+            - NotBlank:
+                  message: 'Podaj ciśnienie.'
+                  groups: [new, edit]
+
+            - Range:
+                  min: 0.01
+                  max: 9999.99
+                  notInRangeMessage: 'Podaj ciśnienie od 0,01 do 9999,99 hPa.'
+                  groups: [new, edit]

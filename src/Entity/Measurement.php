@@ -18,11 +18,17 @@ class Measurement
     #[ORM\JoinColumn(nullable: false)]
     private ?Location $location = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTime $date = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 0)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
     private ?string $celsius = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $humidity = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2, nullable: true)]
+    private ?string $pressureHpa = null;
 
     public function getId(): ?int
     {
@@ -61,6 +67,30 @@ class Measurement
     public function setCelsius(string $celsius): static
     {
         $this->celsius = $celsius;
+
+        return $this;
+    }
+
+    public function getHumidity(): ?int
+    {
+        return $this->humidity;
+    }
+
+    public function setHumidity(?int $humidity): static
+    {
+        $this->humidity = $humidity;
+
+        return $this;
+    }
+
+    public function getPressureHpa(): ?string
+    {
+        return $this->pressureHpa;
+    }
+
+    public function setPressureHpa(?string $pressureHpa): static
+    {
+        $this->pressureHpa = $pressureHpa;
 
         return $this;
     }
