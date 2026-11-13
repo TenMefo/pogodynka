@@ -1,47 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Pogoda — {{ location.city }}
-{% endblock %}
+{% block title %}Pogoda — {{ location.city }}{% endblock %}
 
 {% block body %}
-    <main>
-        <h1>Pogoda dla {{ location.city }}, {{ location.country }}</h1>
+    <section class="panel mx-auto" style="max-width: 900px">
+        <header class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+            <div>
+                <h1 class="h3 mb-1">Pogoda dla {{ location.city }}, {{ location.country }}</h1>
+                <p class="text-body-secondary mb-0">Współrzędne: {{ location.latitude }}, {{ location.longitude }}</p>
+            </div>
+            <a class="btn btn-outline-secondary btn-sm" href="{{ path('app_weather_index') }}">
+                Zmień miejscowość
+            </a>
+        </header>
 
-        <p>
-            Współrzędne:
-            {{ location.latitude }},
-            {{ location.longitude }}
-        </p>
+        <h2 class="h5 mb-3">Prognoza na kolejne dni</h2>
 
-        <h2>Prognoza na kolejne dni</h2>
-
-        <table>
-            <thead>
-            <tr>
-                <th>Data i godzina</th>
-                <th>Temperatura</th>
-                <th>Wilgotność</th>
-                <th>Ciśnienie</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            {% for measurement in measurements %}
-                <tr>
-                    <td>{{ measurement.date|date('d.m.Y H:i') }}</td>
-                    <td>{{ measurement.celsius }} °C</td>
-                    <td>{{ measurement.humidity is null ? 'Brak danych' : measurement.humidity ~ ' %' }}</td>
-                    <td>{{ measurement.pressureHpa is null ? 'Brak danych' : measurement.pressureHpa ~ ' hPa' }}</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4">
-                        Brak prognozy na kolejne dni.
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </main>
+        <div class="table-responsive rounded border">
+            <table class="table table-striped align-middle text-nowrap mb-0" aria-label="Prognoza na kolejne dni">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col" class="px-3 py-3">Data i godzina</th>
+                        <th scope="col" class="text-end px-3 py-3">Temperatura</th>
+                        <th scope="col" class="text-end px-3 py-3">Wilgotność</th>
+                        <th scope="col" class="text-end px-3 py-3">Ciśnienie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for measurement in measurements %}
+                        <tr>
+                            <td class="px-3 py-3">{{ measurement.date|date('d.m.Y H:i') }}</td>
+                            <td class="text-end px-3 py-3">{{ measurement.celsius }} °C</td>
+                            <td class="text-end px-3 py-3">{{ measurement.humidity is null ? 'Brak danych' : measurement.humidity ~ ' %' }}</td>
+                            <td class="text-end px-3 py-3">{{ measurement.pressureHpa is null ? 'Brak danych' : measurement.pressureHpa ~ ' hPa' }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center text-body-secondary p-4">Brak prognozy na kolejne dni.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 {% endblock %}

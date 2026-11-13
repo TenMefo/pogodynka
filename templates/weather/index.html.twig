@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prognoza pogody{% endblock %}
+
+{% block body %}
+    <section class="panel mx-auto" style="max-width: 900px">
+        <h1 class="h3 mb-3">Prognoza na kolejne dni</h1>
+
+        {% if locations is not empty %}
+            <p class="text-body-secondary">Wybierz miejscowość, aby zobaczyć prognozę.</p>
+            <ul class="list-group">
+                {% for location in locations %}
+                    <li class="list-group-item p-0">
+                        <a
+                            class="list-group-item-action d-flex justify-content-between gap-3 px-3 py-3 text-decoration-none"
+                            href="{{ path('app_weather', {country: location.country, city: location.city}) }}"
+                        >
+                            <span class="fw-semibold">{{ location.city }}</span>
+                            <span class="text-body-secondary">{{ location.country }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-body-secondary mb-0">Brak miejscowości w bazie.</p>
+        {% endif %}
+    </section>
+{% endblock %}

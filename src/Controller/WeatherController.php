@@ -3,13 +3,21 @@
 namespace App\Controller;
 
 use App\Repository\LocationRepository;
-use App\Repository\MeasurementRepository;
+use App\Service\WeatherUtil;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class WeatherController extends AbstractController
 {
+    #[Route('/weather', name: 'app_weather_index', methods: ['GET'])]
+    public function index(LocationRepository $locations): Response
+    {
+        return $this->render('weather/index.html.twig', [
+            'locations' => $locations->findBy([], ['city' => 'ASC', 'country' => 'ASC']),
+        ]);
+    }
+
     #[Route(
         '/weather/{country}/{city}',
         name: 'app_weather',
@@ -19,7 +27,7 @@ class WeatherController extends AbstractController
         string $country,
         string $city,
         LocationRepository $locations,
-        MeasurementRepository $measurements
+        WeatherUtil $weather
     ): Response {
         // Znajdź miejscowość w bazie.
         $location = $locations->findOneBy([
@@ -35,7 +43,7 @@ class WeatherController extends AbstractController
         }
 
         // Pobierz prognozę dla znalezionego miasta.
-        $forecast = $measurements->findByLocation($location);
+        $forecast = $weather->getWeatherForLocation($location);
 
         // Przekaż obie zmienne do widoku.
         return $this->render('weather/city.html.twig', [
