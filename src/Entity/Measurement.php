@@ -64,6 +64,18 @@ class Measurement
         return $this->celsius;
     }
 
+    public function getFahrenheit(): ?string
+    {
+        if ($this->celsius === null) {
+            return null;
+        }
+
+        // Dwa miejsca w skali Celsjusza mogą dać trzy w skali Fahrenheita.
+        $fahrenheit = (float) $this->celsius * 9 / 5 + 32;
+
+        return rtrim(rtrim(number_format($fahrenheit, 3, '.', ''), '0'), '.');
+    }
+
     public function setCelsius(string $celsius): static
     {
         $this->celsius = $celsius;

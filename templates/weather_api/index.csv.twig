@@ -1,0 +1,7 @@
+{%- autoescape false -%}
+{{- 'city,country,date,celsius,fahrenheit' ~ "\r\n" -}}
+{%- for measurement in measurements -%}
+    {{- '"' ~ city|replace({'"': '""'}) ~ '","' ~ country|replace({'"': '""'}) ~ '",' -}}
+    {{- measurement.date ~ ',' ~ measurement.celsius ~ ',' ~ measurement.fahrenheit ~ "\r\n" -}}
+{%- endfor -%}
+{%- endautoescape -%}

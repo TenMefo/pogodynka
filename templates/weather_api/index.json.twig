@@ -1,0 +1,13 @@
+{
+    "city": "{{ city|e('js')|raw }}",
+    "country": "{{ country|e('js')|raw }}",
+    "measurements": [
+        {% for measurement in measurements %}
+        {
+            "date": "{{ measurement.date|e('js')|raw }}",
+            "celsius": "{{ measurement.celsius|e('js')|raw }}",
+            "fahrenheit": "{{ measurement.fahrenheit|e('js')|raw }}"
+        }{{ not loop.last ? ',' : '' }}
+        {% endfor %}
+    ]
+}
