@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Prognoza Open-Meteo{% endblock %}
+
+{% block body %}
+    <section class="panel mx-auto" style="max-width: 1000px">
+        <h1 class="h3 mb-2">Prognoza Open-Meteo</h1>
+        <p class="text-body-secondary mb-4">Podaj współrzędne miejsca. Wartości początkowe wskazują <strong>Szczecin</strong>.</p>
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="row g-3">
+                <div class="col-md-6">{{ form_row(form.latitude) }}</div>
+                <div class="col-md-6">{{ form_row(form.longitude) }}</div>
+            </div>
+            <button class="btn btn-primary mt-2" type="submit">Pobierz prognozę</button>
+        {{ form_end(form) }}
+
+        {% if error %}<p class="alert alert-danger mt-4" role="alert">{{ error }}</p>{% endif %}
+        {% if weather_data %}
+            <h2 class="h5 mt-4">Prognoza na {{ weather_data.daily.time|length }} dni</h2>
+            <p class="text-body-secondary">Wybrana pozycja {{ form.latitude.vars.data }}, {{ form.longitude.vars.data }} · Strefa {{ weather_data.timezone }} · Wysokość {{ weather_data.elevation }} m</p>
+            <div class="table-responsive border rounded">
+                <table class="table table-striped align-middle text-nowrap mb-0">
+                    <caption class="px-3">Dane Open-Meteo. Zakres obejmuje: temperaturę minimalną, maksymalną i opady.</caption>
+                    <thead class="table-light"><tr>
+                        <th scope="col" class="p-3">Data (UTC)</th>
+                        <th scope="col" class="p-3 text-end">Minimum (°C)</th>
+                        <th scope="col" class="p-3 text-end">Maksimum (°C)</th>
+                        <th scope="col" class="p-3 text-end">Odpady (mm)</th>
+                    </tr></thead>
+                    <tbody>
+                    {% for date in weather_data.daily.time %}
+                        {% set i = loop.index0 %}
+                        <tr>
+                            <td class="p-3">{{ date|date('d.m.Y') }}</td>
+                            <td class="p-3 text-end">{{ weather_data.daily.temperature_2m_min[i] ?? 'Brak danych' }}</td>
+                            <td class="p-3 text-end">{{ weather_data.daily.temperature_2m_max[i] ?? 'Brak danych' }}</td>
+                            <td class="p-3 text-end">{{ weather_data.daily.precipitation_sum[i] ?? 'Brak danych' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

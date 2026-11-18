@@ -11,11 +11,16 @@
             {{ measurement.location.city }},
             {{ measurement.location.country }}<br>
 
+            <strong>ID lokalizacji:</strong>
+            <a href="{{ path('app_location_show', {id: measurement.location.id}) }}">{{ measurement.location.id }}</a><br>
+            <strong>Współrzędne:</strong>
+            {{ measurement.location.latitude }}, {{ measurement.location.longitude }}<br>
+
             <strong>Data i godzina:</strong>
             {{ measurement.date|date('d.m.Y H:i') }}<br>
 
             <strong>Temperatura:</strong>
-            {{ measurement.celsius }} °C<br>
+            {{ measurement.celsius }} °C / {{ measurement.fahrenheit }} °F<br>
 
             <strong>Wilgotność:</strong>
             {{ measurement.humidity is null ? 'Brak danych' : measurement.humidity ~ ' %' }}<br>

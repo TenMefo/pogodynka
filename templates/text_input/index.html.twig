@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formularz tekstowy i XSS{% endblock %}
+
+{% block body %}
+    <section class="panel mx-auto" style="max-width: 900px">
+        <h1 class="h3 mb-3">Formularz tekstowy i XSS</h1>
+        <p class="alert alert-warning">Surowy podgląd wykonuje przesłany HTML i JavaScript.</p>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary mt-3" type="submit">Wyślij tekst</button>
+        {{ form_end(form) }}
+
+        {% if submittedText is not null %}
+            <h2 class="h5 mt-4">Tekst z automatycznym escapingiem</h2>
+            <p id="escaped-text" class="border rounded p-3 text-break" style="white-space: pre-wrap">{{ submittedText }}</p>
+            <h2 class="h5 mt-4">Surowy HTML</h2>
+            <p id="raw-text" class="border rounded p-3 text-break">{{ submittedText|raw }}</p>
+        {% endif %}
+    </section>
+{% endblock %}
